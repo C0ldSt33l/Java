@@ -6,36 +6,43 @@ import com.raylib.Colors;
 import helpers.Point2D;
 
 public class Pallete<E extends PalleteElement> {
-    private Rectangle rect;
+    private Rectangle rect = new Rectangle();
 
     private E[] elements;
     private E selected = null;
     private boolean isHorizontal;
-    private int sepSize = 10;
-    private int widthSep = 2;
+    private int elemSep = 8;
+    private int widthSep = 5;
 
     public Pallete(Point2D pos, E[] elems, boolean isHorizontal) {
         this.elements = elems;
         this.isHorizontal = isHorizontal;
 
-        this.rect = new Rectangle();
         this.rect.x(pos.x);
         this.rect.y(pos.y);
-        if (isHorizontal) {
-            this.rect.width(elems.length * elems[0].getSize().x + (elems.length + 2) * this.sepSize);
-            this.rect.height(elems[0].getSize().y + 2 * this.widthSep);
 
-            var sep = new Point2D(sepSize, 0);
-            var elSize = new Point2D(elems[0].size.x, 0);
-            var startPos =
-                    new Point2D((int)this.rect.x(), (int)this.rect.y())
-                    .plus(new Point2D(elems[0].getSize().x, this.widthSep));
-            for (var i = 0; i < this.elements.length; i++) {
-                System.out.println(startPos.toString());
-                this.elements[i].pos = startPos;
-                System.out.println(this.elements[i].pos);
-                startPos = startPos.plus(elSize).plus(sep);
-            }
+
+        var width = elems.length * elems[0].getSize().x + (elems.length - 1) * this.elemSep + 2 * this.elemSep / 2;
+        var height = elems[0].getSize().y + 2 * this.widthSep;
+
+        var starPos = this.getPos();
+
+        Point2D dist;
+        if (isHorizontal) {
+           this.rect.width(width);
+           this.rect.height(height);
+           starPos = starPos.plus(new Point2D(this.elemSep / 2, this.widthSep));
+           dist = new Point2D(elems[0].getSize().x + this.elemSep, 0);
+        } else {
+            this.rect.width(height);
+            this.rect.height(width);
+            starPos = starPos.plus(new Point2D(this.widthSep, this.elemSep / 2));
+            dist = new Point2D(0, elems[0].getSize().x + this.elemSep);
+        }
+
+        for (var el : this.elements) {
+            el.setPos(starPos);
+            starPos = starPos.plus(dist);
         }
     }
 
@@ -49,9 +56,13 @@ public class Pallete<E extends PalleteElement> {
         this.selected.makeSelected();
     }
 
+    public Point2D getPos() {
+        return new Point2D((int)this.rect.x() ,(int)this.rect.y());
+    }
+
     public void draw() {
-//        DrawRectangleRounded(this.rect, 0.5f, 0, Colors.GRAY);
-//        DrawRectangleRoundedLines(this.rect, 0.5f, 0, Colors.BLACK);
+        DrawRectangleRounded(this.rect, 0.2f, 4, Colors.GRAY);
+        DrawRectangleRoundedLinesEx(this.rect, 0.2f, 4, 3f, Colors.BLACK);
         for (var el : this.elements) {
             el.draw();
         }

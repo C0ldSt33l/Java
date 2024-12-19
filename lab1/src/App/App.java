@@ -23,21 +23,15 @@ public class App {
         this.colorPallete = new Pallete<ColorElement>(
                 new Point2D(50),
                 new ColorElement[] {
-                        new ColorElement(new Point2D(500), new Point2D(30), Colors.RED),
-                        new ColorElement(new Point2D(400), new Point2D(30), Colors.GREEN),
-                        new ColorElement(new Point2D(300), new Point2D(30), Colors.BLUE),
+                        new ColorElement(new Point2D(0), new Point2D(30), Colors.RED),
+                        new ColorElement(new Point2D(0), new Point2D(30), Colors.GREEN),
+                        new ColorElement(new Point2D(0), new Point2D(30), Colors.BLUE),
                 },
-                true
+               false
         );
     }
 
     public void run() {
-        var shapes = new IShape[] {
-                new Rect(new Point2D(50), new Point2D(100), Colors.BLACK),
-                new Circle(new Point2D(400, 50), 50, Colors.DARKBLUE),
-        };
-
-
         while (!WindowShouldClose()) {
             BeginDrawing();
             {

@@ -6,7 +6,6 @@ import static com.raylib.Raylib.*;
 import helpers.Point2D;
 
 public class ColorElement extends PalleteElement {
-    private Rectangle rect;
     private Color col;
     private float outlineThickness;
 
