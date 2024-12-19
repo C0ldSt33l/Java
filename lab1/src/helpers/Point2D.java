@@ -22,6 +22,12 @@ public class Point2D {
     public Point2D minus(Point2D other) {
         return new Point2D(this.x - other.x, this.y - other.y);
     }
+    public Point2D div(int d) {
+        return new Point2D(this.x / d, this.y / d);
+    }
+    public Point2D mul(int m) {
+        return new Point2D(this.x * m, this.y * m);
+    }
 
     public Raylib.Vector2 toVector2() {
         var vec = new Raylib.Vector2();
